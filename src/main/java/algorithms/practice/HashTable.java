@@ -27,11 +27,7 @@ public class HashTable {
     }
 
     private void insert(List buckets, Integer value) {
-//        if (buckets.size() == 0) {
-//            buckets.add(value);
-//        } else {
-            insert(buckets, value, 0, buckets.size());
-//        }
+        insert(buckets, value, 0, buckets.size());
     }
 
     private void insert(List buckets, Integer value, int start, int end) {
@@ -42,13 +38,13 @@ public class HashTable {
         }
         final int valueHash = value.hashCode();
         if (size == 1) {
-            buckets.add(buckets.get(start).hashCode() < valueHash ? end : start, value);
+            buckets.add((buckets.get(start).hashCode() < valueHash ? end : start), value);
             return;
         }
         int middle = size / 2;
         int middleHash = buckets.get(start + middle).hashCode();
         if (middleHash < valueHash) {
-            insert(buckets, value, start + middle + 1, end);
+            insert(buckets, value, start + middle, end);
         } else {
             insert(buckets, value, start, start + middle);
         }
@@ -70,13 +66,32 @@ public class HashTable {
             line = line.trim();
             String[] stringArray = line.split(",");
             int[] array = convert(stringArray);
-            HashTable hashTable = new HashTable(1);
-            for (int value : array) {
-                System.out.print(((Integer) value).hashCode() + " ");
+            int buckets = array[0];
+            int[] adaptedArray = new int[array.length - 1];
+            System.arraycopy(array, 1, adaptedArray, 0, adaptedArray.length);
+            System.out.println(Arrays.toString(adaptedArray));
+            HashTable hashTable = new HashTable(buckets);
+            for (int value : adaptedArray) {
                 hashTable.add(value);
             }
             System.out.println();
-            System.out.println(Arrays.toString(hashTable.table[0].toArray()));
+            for (int i = 0; i < array[0]; ++i) {
+                System.out.println(String.format("%d. ", i + 1) + (hashTable.table[i] == null ? "[ ]" : Arrays.toString(hashTable.table[i].toArray())));
+            }
+            System.out.println();
         }
+/*
+        for (int j = 0; j < 5; ++j) {
+            int quantity = ((int) (Math.random() * 1000)) + 1;
+            int upperBound = ((int) (Math.random() * 10000)) + quantity;
+            int buckets = ((int) (Math.random() * quantity)) + 1;
+            System.out.print(buckets);
+            for (int i = 0; i < quantity; ++i) {
+                int value = ((int) (Math.random() * upperBound));
+                System.out.print("," + String.valueOf(value));
+            }
+            System.out.println();
+        }
+*/
     }
 }
