@@ -80,18 +80,5 @@ public class HashTable {
             }
             System.out.println();
         }
-/*
-        for (int j = 0; j < 5; ++j) {
-            int quantity = ((int) (Math.random() * 1000)) + 1;
-            int upperBound = ((int) (Math.random() * 10000)) + quantity;
-            int buckets = ((int) (Math.random() * quantity)) + 1;
-            System.out.print(buckets);
-            for (int i = 0; i < quantity; ++i) {
-                int value = ((int) (Math.random() * upperBound));
-                System.out.print("," + String.valueOf(value));
-            }
-            System.out.println();
-        }
-*/
     }
 }
